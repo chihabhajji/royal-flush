@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const Event = z.object({
+export const EventSchema = z.object({
   name: z.string().min(1).max(100),
   description: z.string().min(1).max(100),
   date: z.date(),
