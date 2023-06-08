@@ -1,0 +1,56 @@
+{
+  "name": "royal-flush-pack",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/royal-flush-pack/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/royal-flush-pack",
+        "main": "apps/royal-flush-pack/src/main.ts",
+        "tsConfig": "apps/royal-flush-pack/tsconfig.app.json",
+        "assets": ["apps/royal-flush-pack/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/royal-flush-pack/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "generateLockfile": true
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "royal-flush-pack:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "royal-flush-pack:build:development"
+        },
+        "production": {
+          "buildTarget": "royal-flush-pack:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/royal-flush-pack/**/*.ts"]
+      }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f apps/royal-flush-pack/Dockerfile . -t royal-flush-pack"
+    }
+  },
+  "tags": []
+}
