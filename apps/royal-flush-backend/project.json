@@ -1,0 +1,68 @@
+{
+  "name": "royal-flush-backend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/royal-flush-backend/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/apps/royal-flush-backend",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "apps/royal-flush-backend/src/main.ts",
+        "tsConfig": "apps/royal-flush-backend/tsconfig.app.json",
+        "assets": ["apps/royal-flush-backend/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "generateLockfile": true,
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "royal-flush-backend:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "royal-flush-backend:build:development"
+        },
+        "production": {
+          "buildTarget": "royal-flush-backend:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/royal-flush-backend/**/*.ts"]
+      }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f apps/royal-flush-backend/Dockerfile . -t royal-flush-backend"
+    }
+  },
+  "tags": []
+}

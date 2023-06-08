@@ -1,0 +1,73 @@
+{
+  "name": "royal-flush-frontend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/royal-flush-frontend/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/royal-flush-frontend"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "royal-flush-frontend:build",
+        "proxyConfig": "apps/royal-flush-frontend/proxy.conf.json"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "royal-flush-frontend:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "royal-flush-frontend:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nx/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "royal-flush-frontend:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "royal-flush-frontend:build:development"
+        },
+        "production": {
+          "buildTarget": "royal-flush-frontend:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["coverage/apps/royal-flush-frontend"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/apps/royal-flush-frontend"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/royal-flush-frontend/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": []
+}

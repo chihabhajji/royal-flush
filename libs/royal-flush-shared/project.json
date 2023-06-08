@@ -1,0 +1,26 @@
+{
+  "name": "royal-flush-shared",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/royal-flush-shared/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/royal-flush-shared",
+        "main": "libs/royal-flush-shared/src/index.ts",
+        "tsConfig": "libs/royal-flush-shared/tsconfig.lib.json",
+        "assets": ["libs/royal-flush-shared/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/royal-flush-shared/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}
