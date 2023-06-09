@@ -1,35 +1,105 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.css';
+import styles from './app.module.scss';
 
-import { Route, Routes, Link, createBrowserRouter, RouterProvider, Outlet, BrowserRouter } from 'react-router-dom';
+import { Link, createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Login from './pages/login';
+import Register from './pages/register';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import axios from 'axios';
+export const homeClient = new QueryClient()
+export const dashboardClient = new QueryClient()
+export const HOME_AXIOS_CLIENT = axios.create({
+  baseURL: '/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+export const DASHBOARD_AXIOS_CLIENT = axios.create({
+  baseURL: '/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: Layout(),
+    children: [
+      { path: "/", element: <h1>Home</h1> },
+      { path: "/login", Component: Login },
+      { path: "/register", Component: Register },
+      // { path: "/dashboard/*", Component: Login}
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <h1>Dashboard</h1>,
+    children: [
+      { path: "/", element: <h1>Dashboard</h1> },
+      { path: "/profile", element: <h1>Profile</h1> },
+      { path: "/settings", element: <h1>Settings</h1> },
+    ],
+  }
+]);
 
 export function App() {
-  
-  return (
-    <BrowserRouter>
-    <Routes>
-      {/* 1️⃣ Wrap your routes in a pathless layout route */}
-      <Route element={<Layout />}>
-        <Route path="/" element={<Login />} />
-      </Route>
-    </Routes>
-  </BrowserRouter>)
+  return (<RouterProvider router={router} fallbackElement={<p>Loading...</p>} />);
 }
 
 function Layout() {
   return (
-    <>
+    <div>
       <header>
-        <h1>My Super Cool App</h1>
-        {/* <NavMenu /> */}
+        <nav>
+          <ul>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
+          </ul>
+        </nav>
       </header>
       <main>
-        {/* 2️⃣ Render the app routes via the Layout Outlet */}
+      <QueryClientProvider client={homeClient}>
         <Outlet />
+        </QueryClientProvider>
       </main>
-      <footer>©️ me 2023</footer>
-    </>
+    </div>
   );
 }
+
+
+function DashboardLayout() {
+  return (
+    <div>
+      <header>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">A</Link>
+            </li>
+            <li>
+              <Link to="/profile">Register</Link>
+            </li>
+            <li>
+              <Link to="/settings">Settings</Link>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+      <QueryClientProvider client={dashboardClient}>
+        <Outlet />
+        </QueryClientProvider>
+      </main>
+    </div>
+  );
+}
+
+if (import.meta.hot) {
+  import.meta.hot.dispose(() => router.dispose());
+}
+
 export default App;

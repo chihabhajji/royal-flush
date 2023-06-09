@@ -7,7 +7,7 @@ const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 (async () => {
 
-  await DatabaseDriver.sync({force: true});
+  await DatabaseDriver.sync({force: false});
 
   createServer(server)
     .listen(port, host, async() => {

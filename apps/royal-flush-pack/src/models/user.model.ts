@@ -8,7 +8,7 @@ import { EventeAttendances } from './event-attendee.model';
   timestamps: true,
   paranoid: true,
 })
-export class User extends Model {
+export class User extends Model<User> {
   @Column({
     primaryKey: true,
   })

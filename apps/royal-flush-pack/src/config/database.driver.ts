@@ -7,6 +7,7 @@ export const DatabaseDriver = new Sequelize(process.env.DB_NAME, process.env.DB_
   host: process.env.DB_HOST,
   port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
   dialect: 'mysql',
+  logging: false,
   models: [User, EventModel, EventeAttendances],
   repositoryMode: true,
 });

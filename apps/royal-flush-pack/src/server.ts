@@ -1,19 +1,16 @@
+import { json, urlencoded } from 'body-parser';
 import express from 'express';
-import {User} from "./models/user.model";
-import {json} from 'body-parser';
 import strongErrorHandler from 'strong-error-handler';
-import { DatabaseDriver } from './config/database.driver';
-
-
+import passport from 'passport';
+import { userRouterFactory } from './routes/user.routes';
+import {JWT_STRATEGY} from './util/jwt.utils'
+import { dashboardRouterFactory } from './routes/dashboard.routes';
 
 export const server = express();
-const userRepository = DatabaseDriver.getRepository(User);
+server.use(passport.initialize());
 server.use(json());
-server.get('/', async (req, res) => {
-  const users = await userRepository.findAll();
-  res.json(users);
-});
+server.use(urlencoded({ extended: false }));
+server.use(strongErrorHandler({debug: true,defaultType: 'json', rootProperty: 'error'}));
 
-server.use(strongErrorHandler({
-    debug: true,
-  }));
+server.use(userRouterFactory());
+server.use(dashboardRouterFactory(), passport.authenticate(JWT_STRATEGY.name, {session: false}));
