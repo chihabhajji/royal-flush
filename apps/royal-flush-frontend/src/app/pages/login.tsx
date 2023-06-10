@@ -1,21 +1,19 @@
-import { LoginSchema, LoginSchemaType } from '@royal/shared'
 import { zodResolver } from "@hookform/resolvers/zod"
-import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage, Form } from '../../components/shad/form'
-import { Input } from '../../components/shad/input'
-import { Button } from '../../components/shad/button'
-import { useForm } from 'react-hook-form'
-import toast from 'react-hot-toast';
+import { LoginSchema, LoginSchemaType } from '@royal/shared'
 import { useMutation } from '@tanstack/react-query'
-import { HOME_AXIOS_CLIENT } from '../app';
-import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
 import { AxiosError } from 'axios'
+import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
+import { Button } from '../../components/shad/button'
+import { Form, FormControl, FormField, FormItem, FormLabel } from '../../components/shad/form'
+import { Input } from '../../components/shad/input'
 import useSession from '../../hooks/useSession'
+import { HOME_AXIOS_CLIENT } from '../../lib/axios'
 
 export default function Login() {
   // let move this to other place other time
   // check if user is logged in
-  const { userData } = useSession({
+  useSession({
     redirectTo: '/profile',
     redirectIfFound: true,
   })
@@ -50,7 +48,7 @@ export default function Login() {
   });
     return (
       // remember to call the image from assets folder
-<div className='flex h-screen w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat' style={{backgroundImage: "url('https://wallpapercave.com/wp/wp10770686.jpg')"}}>
+<div className='flex h-screen w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat' style={{backgroundImage: "url('https://wallpapercave.com/wp/wp10770686.jpg')" }}>
   <div className='rounded-xl bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8'>
     <div className='text-white mb-8 flex flex-col items-center'>
       <h1 className='mb-2 text-2xl'>POC</h1>

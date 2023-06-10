@@ -1,26 +1,21 @@
-import { ERole, RegisterSchema } from '@royal/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ERole, RegisterSchema } from '@royal/shared';
+import { useMutation } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import { z } from 'zod';
+import { Button } from '../../components/shad/button';
 import {
+  Form,
+  FormControl,
   FormField,
   FormItem,
-  FormLabel,
-  FormControl,
-  FormDescription,
-  FormMessage,
-  Form,
+  FormLabel
 } from '../../components/shad/form';
 import { Input } from '../../components/shad/input';
-import { Button } from '../../components/shad/button';
-import { useForm } from 'react-hook-form';
-import { useMutation } from '@tanstack/react-query';
-import { HOME_AXIOS_CLIENT } from '../app';
-import {z} from 'zod';
-import { Label } from '../../components/shad/label';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AxiosError } from 'axios';
-import { toast } from 'react-hot-toast';
 import useSession from '../../hooks/useSession';
+import { HOME_AXIOS_CLIENT } from '../../lib/axios';
 const withConfirmation = RegisterSchema.and(z.object({
   confirmationPassword: z.string(),
 })).refine((data) => data.confirmationPassword === data.password, {

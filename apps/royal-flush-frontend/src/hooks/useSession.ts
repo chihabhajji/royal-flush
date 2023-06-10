@@ -2,7 +2,7 @@ import { UserType } from "@royal/shared";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
-import { HOME_AXIOS_CLIENT } from "../app/app";
+import { HOME_AXIOS_CLIENT } from "../lib/axios";
 
 type UseSessionOptions = {
     redirectTo: string;
@@ -26,6 +26,7 @@ export default function useSession({
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       })
+      if(!response.data) throw new Error('No user');
       return response.data as Omit<UserType, 'password'>;
     }, {
         // enabled: !!token,
