@@ -1,6 +1,5 @@
 import { LoginSchema, LoginSchemaType } from '@royal/shared'
 import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
 import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage, Form } from '../../components/shad/form'
 import { Input } from '../../components/shad/input'
 import { Button } from '../../components/shad/button'

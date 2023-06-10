@@ -16,7 +16,7 @@ import { useMutation } from '@tanstack/react-query';
 import { HOME_AXIOS_CLIENT } from '../app';
 import {z} from 'zod';
 import { Label } from '../../components/shad/label';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
 const withConfirmation = RegisterSchema.and(z.object({

@@ -1,6 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.scss';
-
+import './styles.css'
 import { Link, createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Login from './pages/login';
 import Register from './pages/register';
@@ -25,7 +23,7 @@ const router = createBrowserRouter([
     path: "/",
     element: Layout(),
     children: [
-      { path: "/", element: <h1>Home</h1> },
+      { path: "/", element: <h1 className='text-red'>Home</h1> },
       { path: "/login", Component: Login },
       { path: "/register", Component: Register },
       // { path: "/dashboard/*", Component: Login}
@@ -52,7 +50,7 @@ function Layout() {
       <header>
         <nav>
           <ul>
-            <li>
+            <li className='text-red'>
               <Link to="/login">Login</Link>
             </li>
             <li>
