@@ -1,7 +1,7 @@
 import { Table, Column, Model, AllowNull, BelongsToMany , DataType} from 'sequelize-typescript';
 import { EventModel } from './event-model.model';
 import { EventeAttendances } from './event-attendee.model';
-import { ERole } from '../constants/roles.enum';
+import { ERole } from '../../../../libs/royal-flush-shared/src/lib/constants/roles.enum';
 
 @Table({
   tableName: 'users',

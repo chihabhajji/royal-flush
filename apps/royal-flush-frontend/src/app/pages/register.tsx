@@ -1,4 +1,4 @@
-import { RegisterSchema } from '@royal/shared';
+import { ERole, RegisterSchema } from '@royal/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   FormField,
@@ -15,6 +15,10 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { HOME_AXIOS_CLIENT } from '../app';
 import {z} from 'zod';
+import { Label } from '../../components/shad/label';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
 const withConfirmation = RegisterSchema.and(z.object({
   confirmationPassword: z.string(),
 })).refine((data) => data.confirmationPassword === data.password, {
@@ -23,12 +27,29 @@ const withConfirmation = RegisterSchema.and(z.object({
 });
 type RegisterSchemaType = z.infer<typeof withConfirmation>;
 export default function Register() {
-  const {data, isLoading, isError, isSuccess, error, mutate} = useMutation(['register'], async (requestDto: RegisterSchemaType) => {
-    const response = await HOME_AXIOS_CLIENT.post('/home/register', requestDto);
-    console.log(response.data)
+  const navigate = useNavigate();
+  useEffect(() => {
+    if(localStorage.getItem('token')) {
+      alert('You are already logged in!')
+      navigate('/')
+    }
+  }, [navigate])
+  const {isLoading, isError, isSuccess, error, mutate} = useMutation(['register'], async (requestDto: RegisterSchemaType) => {
+    const dto = structuredClone(requestDto) as any;
+    delete dto.confirmationPassword;
+    const response = await HOME_AXIOS_CLIENT.post('/home/register', dto);
+    if(response.data.token) {
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      if(response.data.user.role === ERole.Admin) {
+        navigate('/dashboard')
+      } else {
+        navigate('/')
+      }
+    }
     return response.data;
   });
-  // 1. Define your form.
+  
   const form = useForm<RegisterSchemaType>({
     resolver: zodResolver(withConfirmation),
     defaultValues: {
@@ -117,8 +138,21 @@ export default function Register() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        {
+          !isLoading && (<div>
+                    <Button type="submit">Submit</Button>
         <Button type="reset">Reset</Button>
+          </div>)
+        }
+        <div>
+        {
+          isLoading && <Label>Loading...</Label>
+        }
+        {
+          isSuccess && <Label>Success!</Label>
+        }
+        {isError && <Label>{(error as AxiosError<Error>).response?.data?.message}</Label>}
+        </div>
       </form>
     </Form>
   );

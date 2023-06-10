@@ -1,7 +1,7 @@
 import { compareSync, hashSync } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { USER_REPOSITORY } from '../services/user.service';
-import { ERole } from '../constants/roles.enum';
+import { ERole } from '../../../../libs/royal-flush-shared/src/lib/constants/roles.enum';
 
 export const registerUser = async (req, res) => {
   const body = req.body;
@@ -14,7 +14,11 @@ export const registerUser = async (req, res) => {
   const hashedPassword = hashSync(body.password, 12);
   delete body.password;
   return USER_REPOSITORY.create({ ...body, password: hashedPassword, role: body.email.endsWith('@royalflush.com') ? ERole.Admin : ERole.User })
-  .then((user) => res.json({token  : jwt.sign({ email: user.email }, process.env.JWT_SECRET)}))
+  .then((user) => {
+    const publicUser = user.toJSON();
+    delete publicUser.password;
+    return res.json({ token: jwt.sign({ email: user.email }, process.env.JWT_SECRET), user: publicUser });
+  })
   .catch((e) => {
     console.error(e.message);
     res.status(500).json({ message: 'Something went wrong' });
