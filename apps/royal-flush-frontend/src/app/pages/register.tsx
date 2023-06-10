@@ -67,7 +67,7 @@ export default function Register() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit((v) => mutate(v))}
-        className="space-y-8"
+        className="space-y-8 flex flex-col"
         onReset={() => form.reset()}
       >
         <FormField
@@ -140,12 +140,14 @@ export default function Register() {
             </FormItem>
           )}
         />
+        <div className='flex place-self-end'>
         {
-          !isLoading && (<div>
+          !isLoading && (<>
                     <Button type="submit">Submit</Button>
         <Button type="reset">Reset</Button>
-          </div>)
+          </>)
         }
+        </div>
         <div>
         {
           isLoading && <Label>Loading...</Label>
