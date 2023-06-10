@@ -62,6 +62,8 @@ export default function Register() {
   });
 
   return (
+    <div className='container mx-auto px-4'>
+
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit((v) => mutate(v))}
@@ -155,5 +157,6 @@ export default function Register() {
         </div>
       </form>
     </Form>
+    </div>
   );
 }

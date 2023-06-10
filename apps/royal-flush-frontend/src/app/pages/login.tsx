@@ -18,6 +18,7 @@ export default function Login() {
     console.log(values)
   }
     return (
+      <div className='container mx-auto px-4'>
         <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" onReset={() => form.reset()}>
           <FormField
@@ -57,6 +58,6 @@ export default function Login() {
         </form>
         
       </Form>
-      
+      </div>
     )
 }
