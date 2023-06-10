@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('profile') || '{}');
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
 
 
   return (
