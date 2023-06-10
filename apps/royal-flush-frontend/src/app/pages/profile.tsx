@@ -1,11 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
-import { HOME_AXIOS_CLIENT } from '../app';
 import useSession from '../../hooks/useSession';
 
 const Profile = () => {
   const {userData} = useSession({
     redirectTo: '/login',
+    redirectIfFound: false,
+    redirectIfNotFound: true,
   })
   return (
     <div className="container mx-auto p-6">
