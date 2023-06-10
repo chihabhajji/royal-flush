@@ -1,4 +1,5 @@
 import { ERole } from "../constants/roles.enum";
+import { EventType } from "./event-model.interface";
 
 export interface UserType {
     email: string;
@@ -6,6 +7,6 @@ export interface UserType {
     firstName: string;
     lastName: string;
     role: ERole;
-    events: any[];
+    events: EventType[];
     fullName: string;
   }

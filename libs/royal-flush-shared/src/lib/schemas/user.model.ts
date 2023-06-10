@@ -3,6 +3,7 @@ import { EventModel } from './event-model.model';
 import { EventeAttendances } from './event-attendee.model';
 import { ERole } from '../constants/roles.enum';
 import { UserType } from '../interfaces/user.interface';
+import { EventType } from '../interfaces/event-model.interface';
 
  
 
@@ -36,7 +37,7 @@ export class User extends Model<UserType> implements UserType {
   })
   role: ERole = ERole.User;
   @BelongsToMany(() => EventModel, () => EventeAttendances)
-  events: EventModel[] = [];
+  events: EventType[] = [];
   get fullName(): string {
     return `${this.getDataValue('firstName')} ${this.getDataValue('lastName')}`;
   }
