@@ -8,7 +8,7 @@ const Profile = () => {
   })
   return (
     <div className="container mx-auto p-6">
-      <div className="w-full max-w-2xl mx-auto rounded-md shadow-md overflow-hidden">
+      <div className="w-full max-w-2xl mx-auto rounded-md shadow-md overflow-hidden ">
         <div className="flex justify-center items-center w-full bg-teal-500 py-8">
           <div className="text-center">
             <h2 className="text-white text-3xl font-semibold">Welcome to your profile</h2>

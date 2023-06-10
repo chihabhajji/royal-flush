@@ -1,0 +1,8 @@
+{
+    "editor.quickSuggestions": {
+        "strings": true
+      },
+      "tailwindCSS.experimental.configFile": {
+        "apps/royal-flush-frontend/tailwind.config.js": "apps/royal-flush-frontend/**",
+      }
+}
