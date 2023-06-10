@@ -1,6 +1,5 @@
 import passport from 'passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { User } from '../models/user.model';
 import { USER_REPOSITORY } from '../services/user.service';
 
 export const JWT_STRATEGY = new Strategy(

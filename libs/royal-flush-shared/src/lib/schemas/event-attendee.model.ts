@@ -11,16 +11,16 @@ import { EventModel } from "./event-model.model";
 export class EventeAttendances extends Model {
   @ForeignKey(() => EventModel)
   @Column
-  eventId: string;
+  eventId!: string;
 
   @ForeignKey(() => User)
   @Column
-  attendeeEmail: string;
+  attendeeEmail!: string;
 
   @CreatedAt
-  creationDate: Date;
+  creationDate!: Date;
   @UpdatedAt
-  updatedOn: Date;
+  updatedOn!: Date;
   @DeletedAt
-  deletionDate: Date;
+  deletionDate!: Date;
 }

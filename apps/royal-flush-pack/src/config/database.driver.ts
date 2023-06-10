@@ -1,7 +1,8 @@
+import { EventModel, EventeAttendances, User } from "@royal/shared";
 import { Sequelize } from "sequelize-typescript";
-import { User } from "../models/user.model";
-import { EventModel } from "../models/event-model.model";
-import { EventeAttendances } from "../models/event-attendee.model";
+// import { User } from "../models/user.model";
+// import { EventModel } from "../models/event-model.model";
+// import { EventeAttendances } from "../models/event-attendee.model";
 
 export const DatabaseDriver = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
   host: process.env.DB_HOST,

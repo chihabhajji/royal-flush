@@ -14,25 +14,28 @@ export class EventModel extends Model {
     primaryKey: true,
     type: DataType.UUID,
   })
-  id: string;
+  override id!: string;
 
   @Column
-  name: string;
+  name?: string;
   @Column
-  description: string;
+  description?: string;
   @Column(DataType.DATE)
-  date: Date;
+  date!: Date;
   @Column
-  location: string;
-  @Column(DataType.BOOLEAN)
-  isPublic: boolean;
+  location?: string;
+  @Column({
+    type: DataType.BOOLEAN,
+    defaultValue: false,
+  })
+  isPublic = false;
   @CreatedAt
-  creationDate: Date;
+  creationDate!: Date;
   @UpdatedAt
-  updatedOn: Date;
+  updatedOn!: Date;
   @DeletedAt
-  deletionDate: Date;
+  deletionDate!: Date;
 
   @BelongsToMany(() => User, () => EventeAttendances)
-  attendees: User[];
+  attendees: User[] = [];
 }
