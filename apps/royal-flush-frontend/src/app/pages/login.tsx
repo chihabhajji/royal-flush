@@ -10,18 +10,15 @@ import { HOME_AXIOS_CLIENT } from '../app';
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { AxiosError } from 'axios'
+import useSession from '../../hooks/useSession'
 
 export default function Login() {
   // let move this to other place other time
   // check if user is logged in
-  const navigate = useNavigate();
-  // yo please make a hook for user logged in
-  useEffect(() => {
-    if(localStorage.getItem('token')) {
-      alert('You are already logged in!')
-      navigate('/profile')
-    }
-  }, [navigate])
+  const { userData } = useSession({
+    redirectTo: '/profile',
+    redirectIfFound: true,
+  })
 
       // 1. Define your form.
   const form = useForm<LoginSchemaType>({
