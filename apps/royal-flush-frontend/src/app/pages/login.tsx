@@ -44,7 +44,7 @@ export default function Login() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} type='password'/>
+                  <Input placeholder="shadcn" {...field} type='password' autoComplete='new-password'/>
                 </FormControl>
                 <FormDescription>
                   Your super secret password!

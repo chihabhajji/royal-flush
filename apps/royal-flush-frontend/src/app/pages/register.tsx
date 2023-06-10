@@ -17,21 +17,26 @@ import { HOME_AXIOS_CLIENT } from '../app';
 import {z} from 'zod';
 const withConfirmation = RegisterSchema.and(z.object({
   confirmationPassword: z.string(),
-}));
+})).refine((data) => data.confirmationPassword === data.password, {
+  message: "Passwords must match",
+  path: ["confirmationPassword"],
+});
 type RegisterSchemaType = z.infer<typeof withConfirmation>;
 export default function Register() {
   const {data, isLoading, isError, isSuccess, error, mutate} = useMutation(['register'], async (requestDto: RegisterSchemaType) => {
-    const response = await HOME_AXIOS_CLIENT.post('/auth/register', requestDto);
+    const response = await HOME_AXIOS_CLIENT.post('/home/register', requestDto);
+    console.log(response.data)
     return response.data;
   });
   // 1. Define your form.
   const form = useForm<RegisterSchemaType>({
-    resolver: zodResolver(RegisterSchema),
+    resolver: zodResolver(withConfirmation),
     defaultValues: {
       email: '',
       password: '',
       firstName: '',
       lastName: '',
+      confirmationPassword: '',
     },
   });
 
@@ -47,7 +52,7 @@ export default function Register() {
           name="firstName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>First name</FormLabel>
+              <FormLabel className='text-red-950'>First name</FormLabel>
               <FormControl>
                 <Input placeholder="shadcn" {...field} />
               </FormControl>
@@ -75,7 +80,7 @@ export default function Register() {
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} type="email" />
+                <Input placeholder="shadcn" {...field} type="email" autoComplete='username'/>
               </FormControl>
               <FormDescription>
                 This is your public display name.
@@ -91,7 +96,7 @@ export default function Register() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} type="password" />
+                <Input placeholder="shadcn" {...field} type="password" autoComplete='new-password'/>
               </FormControl>
               <FormDescription>Your super secret password!</FormDescription>
               <FormMessage />
@@ -105,7 +110,7 @@ export default function Register() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} type="password" />
+                <Input placeholder="shadcn" {...field} type="password" autoComplete='new-password'/>
               </FormControl>
               <FormDescription>Your super secret password confirmation!</FormDescription>
               <FormMessage />
