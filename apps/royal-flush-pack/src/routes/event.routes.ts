@@ -1,11 +1,9 @@
-import {
-  PaginationSchema
-} from '@royal/shared';
 import { Router } from 'express';
 import passport from 'passport';
 import { processRequestQuery } from 'zod-express-middleware';
 import * as EventController from '../controllers/event.controller';
 import { JWT_STRATEGY } from '../util/jwt.utils';
+import { PaginationSchema } from '@royal/shared';
 
 export const eventsRouterFactory = () =>
   Router()

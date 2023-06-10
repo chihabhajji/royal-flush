@@ -1,7 +1,7 @@
-import { PaginationSchema, RegisterSchema } from '@royal/shared';
 import { Router } from 'express';
 import { processRequestBody, processRequestQuery } from 'zod-express-middleware';
 import * as UserController from '../controllers/user.controller';
+import { PaginationSchema, RegisterSchema } from '@royal/shared';
 
 export const dashboardRouterFactory = () => 
   Router()

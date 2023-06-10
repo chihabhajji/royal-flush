@@ -1,7 +1,7 @@
 import { Column, CreatedAt, DeletedAt, ForeignKey, Model, Table, UpdatedAt } from "sequelize-typescript";
 import { User } from "./user.model";
 import { EventModel } from "./event-model.model";
-import { EventeAttendancesType } from "../interfaces/event-attendee.interface";
+import { EventeAttendancesType } from "@royal/shared";
 
 @Table({
     tableName: 'evente-attendances',

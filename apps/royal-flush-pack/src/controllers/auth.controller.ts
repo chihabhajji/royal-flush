@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { USER_REPOSITORY } from '../services/user.service';
 import { ERole } from '@royal/shared';
 
+
 export const registerUser = async (req, res) => {
   const body = req.body;
   const exists = await USER_REPOSITORY.count({

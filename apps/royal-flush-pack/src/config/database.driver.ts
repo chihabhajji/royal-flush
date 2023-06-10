@@ -1,5 +1,7 @@
-import { EventModel, EventeAttendances, User } from "@royal/shared";
 import { Sequelize } from "sequelize-typescript";
+import { User } from "../schemas/user.model";
+import { EventModel } from "../schemas/event-model.model";
+import { EventeAttendances } from "../schemas/event-attendee.model";
 // import { User } from "../models/user.model";
 // import { EventModel } from "../models/event-model.model";
 // import { EventeAttendances } from "../models/event-attendee.model";
