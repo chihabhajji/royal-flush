@@ -52,47 +52,51 @@ export default function Login() {
     }
   });
     return (
-      <div className='container mx-auto px-4'>
-        <Form {...form}>
-        <form         onSubmit={form.handleSubmit((v) => mutate(v))}  className="space-y-8 flex flex-col" onReset={() => form.reset()}>
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input placeholder="shadcn" {...field} type='email'/>
-                </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      // remember to call the image from assets folder
+<div className='flex h-screen w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat' style={{backgroundImage: "url('https://wallpapercave.com/wp/wp10770686.jpg')"}}>
+  <div className='rounded-xl bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8'>
+    <div className='text-white mb-8 flex flex-col items-center'>
+      <h1 className='mb-2 text-2xl'>POC</h1>
+      <span className='text-gray-300'>Enter Login Details</span>
+    </div>
+    <Form {...form} >
+      <form onSubmit={form.handleSubmit((v) => mutate(v))} className="space-y-8 flex flex-col" onReset={() => form.reset()}>
         <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input placeholder="shadcn" {...field} type='password' autoComplete='new-password'/>
-                </FormControl>
-                <FormDescription>
-                  Your super secret password!
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className='flex place-self-end'>
-            <Button type="submit" className='font-medium text-purple-600 hover:underline' >Submit</Button>
-            <Button type="reset">Reset</Button>
-          </div>
-        </form>
-      </Form>
-      </div>
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className='text-gray-200'>Username</FormLabel>
+              <FormControl>
+                <Input className='rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md' placeholder="id@email.com" {...field} type='email'/>
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className='text-gray-200'>Password</FormLabel>
+              <FormControl>
+                <Input className='rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md' placeholder="*********" {...field} type='password' autoComplete='new-password'/>
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <div className='mt-8 flex justify-center'>
+          <Button type="submit" className='rounded-3xl bg-yellow-400 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600'>Submit</Button>
+          <Button type="reset" className='rounded-3xl bg-yellow-400 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600 ml-4'>Reset</Button>
+        </div>
+        <div className='mt-8 flex justify-center'>
+          <p>
+            Don't have an account? <a href="/register" className='text-yellow-400 hover:text-yellow-600'>Register</a>
+          </p>
+        </div>
+      </form>
+    </Form>
+  </div>
+</div>
     )
 }

@@ -19,6 +19,7 @@ import { Label } from '../../components/shad/label';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
+import { toast } from 'react-hot-toast';
 const withConfirmation = RegisterSchema.and(z.object({
   confirmationPassword: z.string(),
 })).refine((data) => data.confirmationPassword === data.password, {
@@ -37,6 +38,7 @@ export default function Register() {
   const {isLoading, isError, isSuccess, error, mutate} = useMutation(['register'], async (requestDto: RegisterSchemaType) => {
     const dto = structuredClone(requestDto) as any;
     delete dto.confirmationPassword;
+    try{
     const response = await HOME_AXIOS_CLIENT.post('/home/register', dto);
     if(response.data.token) {
       localStorage.setItem('token', response.data.token);
@@ -48,7 +50,12 @@ export default function Register() {
       }
     }
     return response.data;
-  });
+  } catch (error) {
+    toast.error('Something went wrong, please try again later')
+  }
+  
+});
+
   
   const form = useForm<RegisterSchemaType>({
     resolver: zodResolver(withConfirmation),
@@ -62,103 +69,92 @@ export default function Register() {
   });
 
   return (
-    <div className='container mx-auto px-4'>
-
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit((v) => mutate(v))}
-        className="space-y-8 flex flex-col"
-        onReset={() => form.reset()}
-      >
-        <FormField
-          control={form.control}
-          name="firstName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className='text-red-950'>First name</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="lastName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Last name</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} type="email" autoComplete='username'/>
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} type="password" autoComplete='new-password'/>
-              </FormControl>
-              <FormDescription>Your super secret password!</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-                <FormField
-          control={form.control}
-          name="confirmationPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} type="password" autoComplete='new-password'/>
-              </FormControl>
-              <FormDescription>Your super secret password confirmation!</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div className='flex place-self-end'>
-        {
-          !isLoading && (<>
-                    <Button type="submit">Submit</Button>
-        <Button type="reset">Reset</Button>
-          </>)
-        }
-        </div>
-        <div>
-        {
-          isLoading && <Label>Loading...</Label>
-        }
-        {
-          isSuccess && <Label>Success!</Label>
-        }
-        {isError && <Label>{(error as AxiosError<Error>).response?.data?.message}</Label>}
-        </div>
-      </form>
-    </Form>
+    <div className='flex h-screen w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat' style={{backgroundImage: "url('https://usagif.com/wp-content/uploads/gifs/coffee-97.gif')",  } }>
+    <div className='rounded-xl bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8'>
+      <div className='text-white mb-8 flex flex-col items-center'>
+        <h1 className='mb-2 text-2xl'>POC</h1>
+        <span className='text-gray-300'>Enter Registration Details</span>
+      </div>
+      <Form {...form} >
+        <form onSubmit={form.handleSubmit((v) => mutate(v))} className="space-y-8 flex flex-col" onReset={() => form.reset()}>
+          {/* FirstName Field */}
+          <FormField
+            control={form.control}
+            name="firstName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className='text-gray-200'>First name</FormLabel>
+                <FormControl>
+                  <Input className='rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md' placeholder="John" {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          {/* LastName Field */}
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className='text-gray-200'>Last name</FormLabel>
+                <FormControl>
+                  <Input className='rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md' placeholder="Doe" {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          {/* Username Field */}
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className='text-gray-200'>Username</FormLabel>
+                <FormControl>
+                  <Input className='rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md' placeholder="johndoe" {...field} type="email" autoComplete='username'/>
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          {/* Password Field */}
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className='text-gray-200'>Password</FormLabel>
+                <FormControl>
+                  <Input className='rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md' placeholder="*********" {...field} type="password" autoComplete='new-password'/>
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          {/* Confirmation Password Field */}
+          <FormField
+            control={form.control}
+            name="confirmationPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className='text-gray-200'>Confirm Password</FormLabel>
+                <FormControl>
+                  <Input className='rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md' placeholder="*********" {...field} type="password" autoComplete='new-password'/>
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <div className='mt-8 flex justify-center'>
+            <Button type="submit" className='rounded-3xl bg-yellow-400 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600'>Submit</Button>
+            <Button type="reset" className='rounded-3xl bg-yellow-400 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600 ml-4'>Reset</Button>
+          </div>
+          <p>
+            Don't have an account? <a href="/login" className='text-yellow-400 hover:text-yellow-600'>login</a>
+          </p>
+        </form>
+      </Form>
     </div>
+    
+  </div>
+  
+  
   );
 }
