@@ -2,6 +2,9 @@ import { Table, Column, Model, AllowNull, BelongsToMany , DataType} from 'sequel
 import { EventModel } from './event-model.model';
 import { EventeAttendances } from './event-attendee.model';
 import { ERole } from '../constants/roles.enum';
+import { UserType } from '../interfaces/user.interface';
+
+ 
 
 @Table({
   tableName: 'users',
@@ -9,7 +12,7 @@ import { ERole } from '../constants/roles.enum';
   timestamps: true,
   paranoid: true,
 })
-export class User extends Model<User> {
+export class User extends Model<UserType> implements UserType {
   @Column({
     primaryKey: true,
   })

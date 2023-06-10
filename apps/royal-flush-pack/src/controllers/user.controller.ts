@@ -31,13 +31,13 @@ export const createUser = async (req, res, next) => {
 };
 
 export const updateUser = async (req, res, next) => {
-  USER_REPOSITORY.update(req.body, { where: { id: req.params.id } })
+  USER_REPOSITORY.update(req.body, { where: { email: req.params.email } })
     .then(([rowsUpdated]) => rowsUpdated ? res.json(true) : next({ statusCode: 404 }))
     .catch(next);
 };
 
 export const deleteUser = async (req, res, next) => {
-  USER_REPOSITORY.destroy({ where: { id: req.params.id } })
+  USER_REPOSITORY.destroy({ where: { email: req.params.email } })
     .then((rowsDeleted) => rowsDeleted ? res.json(true) : next({ statusCode: 404 }))
     .catch(next);
 };
