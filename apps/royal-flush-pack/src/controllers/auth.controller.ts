@@ -1,7 +1,7 @@
 import { compareSync, hashSync } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { USER_REPOSITORY } from '../services/user.service';
-import { ERole } from '../../../../libs/royal-flush-shared/src/lib/constants/roles.enum';
+import { ERole } from '@royal/shared';
 
 export const registerUser = async (req, res) => {
   const body = req.body;
