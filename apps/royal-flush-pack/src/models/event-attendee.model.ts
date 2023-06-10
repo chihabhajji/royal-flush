@@ -1,4 +1,4 @@
-import { Column, ForeignKey, Model, Table } from "sequelize-typescript";
+import { Column, CreatedAt, DeletedAt, ForeignKey, Model, Table, UpdatedAt } from "sequelize-typescript";
 import { User } from "./user.model";
 import { EventModel } from "./event-model.model";
 
@@ -16,4 +16,11 @@ export class EventeAttendances extends Model {
   @ForeignKey(() => User)
   @Column
   attendeeEmail: string;
+
+  @CreatedAt
+  creationDate: Date;
+  @UpdatedAt
+  updatedOn: Date;
+  @DeletedAt
+  deletionDate: Date;
 }

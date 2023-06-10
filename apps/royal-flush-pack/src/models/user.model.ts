@@ -1,6 +1,7 @@
-import { Table, Column, Model, PrimaryKey, AllowNull, BelongsToMany, HasMany } from 'sequelize-typescript';
+import { Table, Column, Model, AllowNull, BelongsToMany , DataType} from 'sequelize-typescript';
 import { EventModel } from './event-model.model';
 import { EventeAttendances } from './event-attendee.model';
+import { ERole } from '../constants/roles.enum';
 
 @Table({
   tableName: 'users',
@@ -26,6 +27,11 @@ export class User extends Model<User> {
   @Column
   lastName: string;
 
+  @Column({
+    defaultValue: ERole.Admin,
+    type: DataType.TINYINT
+  })
+  role: ERole;
   @BelongsToMany(() => EventModel, () => EventeAttendances)
   events: EventModel[];
   get fullName(): string {
