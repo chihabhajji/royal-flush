@@ -20,6 +20,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import { toast } from 'react-hot-toast';
+import useSession from '../../hooks/useSession';
 const withConfirmation = RegisterSchema.and(z.object({
   confirmationPassword: z.string(),
 })).refine((data) => data.confirmationPassword === data.password, {
@@ -28,13 +29,11 @@ const withConfirmation = RegisterSchema.and(z.object({
 });
 type RegisterSchemaType = z.infer<typeof withConfirmation>;
 export default function Register() {
+  const { userData } = useSession({
+    redirectTo: '/profile',
+    redirectIfFound: true,
+  })
   const navigate = useNavigate();
-  useEffect(() => {
-    if(localStorage.getItem('token')) {
-      alert('You are already logged in!')
-      navigate('/profile')
-    }
-  }, [navigate])
   const {isLoading, isError, isSuccess, error, mutate} = useMutation(['register'], async (requestDto: RegisterSchemaType) => {
     const dto = structuredClone(requestDto) as any;
     delete dto.confirmationPassword;
