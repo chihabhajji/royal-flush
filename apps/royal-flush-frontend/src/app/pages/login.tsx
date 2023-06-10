@@ -48,7 +48,8 @@ export default function Login() {
   });
     return (
       // remember to call the image from assets folder
-<div className='flex h-screen w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat' style={{backgroundImage: "url('https://wallpapercave.com/wp/wp10770686.jpg')" }}>
+
+<div className='flex h-screen w-full items-center justify-center bg-gray-900 bg-myImage bg-cover bg-no-repeat'>
   <div className='rounded-xl bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8'>
     <div className='text-white mb-8 flex flex-col items-center'>
       <h1 className='mb-2 text-2xl'>POC</h1>
