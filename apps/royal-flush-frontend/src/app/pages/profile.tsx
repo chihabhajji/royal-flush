@@ -1,10 +1,18 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { HOME_AXIOS_CLIENT } from '../app';
 
 const Profile = () => {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
-
+  const { data:user, } = useQuery(['profile-user-me'], async () => {
+    const response = await HOME_AXIOS_CLIENT.get(`/home/me`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return response.data;
+  });
 
   return (
     <div className="container mx-auto p-6">

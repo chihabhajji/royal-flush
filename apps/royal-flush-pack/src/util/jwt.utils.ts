@@ -9,8 +9,11 @@ export const JWT_STRATEGY = new Strategy(
   },
   async function (jwtPayload, cb) {
     try {
-      console.log(jwtPayload);
+      console.log(jwtPayload)
+      if(!jwtPayload.email) return cb(new Error('Not authorized!'), false);
       const user = await USER_REPOSITORY.findByPk(jwtPayload.email);
+      if(!user) return cb(new Error('Chtaamel linna inta!'), false);
+      console.log(user.email);
       return cb(null, user);
     } catch (err) {
       return cb(err);
