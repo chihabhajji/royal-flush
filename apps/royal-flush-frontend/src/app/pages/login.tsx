@@ -4,7 +4,25 @@ import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessa
 import { Input } from '../../components/shad/input'
 import { Button } from '../../components/shad/button'
 import { useForm } from 'react-hook-form'
+import axios from 'axios'
+import toast from 'react-hot-toast';
+import { useMutation } from '@tanstack/react-query'
+import { HOME_AXIOS_CLIENT } from '../app';
+import { Navigate, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+
 export default function Login() {
+  // let move this to other place other time
+  // check if user is logged in
+  const navigate = useNavigate();
+  // yo please make a hook for user logged in
+  useEffect(() => {
+    if(localStorage.getItem('token')) {
+      alert('You are already logged in!')
+      navigate('/profile')
+    }
+  }, [navigate])
+
       // 1. Define your form.
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema),
@@ -14,13 +32,32 @@ export default function Login() {
     },
   })
 
-  function onSubmit(values: LoginSchemaType) {
-    console.log(values)
+  // change the function onSubmit to  mutate
+  // dear choba late i will use isLoading is Error and isSuccess don't worry
+const {isLoading, isError, isSuccess, error, mutate} = useMutation(['login'], async (requestDto: LoginSchemaType) => {
+  try {
+    const dto = structuredClone(requestDto) as any;
+    const response = await HOME_AXIOS_CLIENT.post('/home/login', dto);
+    if(response.data.token) {
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      toast.success("Login Success");
+      window.location.href = '/dashboard';
+    }
+    return response.data;
+  } catch (err) {
+    // Assuming toast is coming from 'react-toastify'
+    toast.error( "Login failed");
+    throw err; // rethrow the error, in case you want to handle it in an upper scope or have the 'error' from 'useMutation' updated.
   }
+});
+
+
+  
     return (
       <div className='container mx-auto px-4'>
         <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" onReset={() => form.reset()}>
+        <form         onSubmit={form.handleSubmit((v) => mutate(v))}  className="space-y-8" onReset={() => form.reset()}>
           <FormField
             control={form.control}
             name="email"

@@ -31,7 +31,7 @@ export default function Register() {
   useEffect(() => {
     if(localStorage.getItem('token')) {
       alert('You are already logged in!')
-      navigate('/')
+      navigate('/profile')
     }
   }, [navigate])
   const {isLoading, isError, isSuccess, error, mutate} = useMutation(['register'], async (requestDto: RegisterSchemaType) => {

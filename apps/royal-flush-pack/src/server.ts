@@ -6,8 +6,11 @@ import { userRouterFactory } from './routes/user.routes';
 import {JWT_STRATEGY} from './util/jwt.utils'
 import { dashboardRouterFactory } from './routes/dashboard.routes';
 import { eventsRouterFactory } from './routes/event.routes';
+import cors from 'cors';
 
 export const server = express();
+
+server.use(cors());
 server.use(passport.initialize());
 server.use(json());
 server.use(urlencoded({ extended: false }));

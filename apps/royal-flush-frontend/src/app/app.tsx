@@ -4,6 +4,7 @@ import Login from './pages/login';
 import Register from './pages/register';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import axios from 'axios';
+import { Toaster } from 'react-hot-toast';
 export const homeClient = new QueryClient()
 export const dashboardClient = new QueryClient()
 export const HOME_AXIOS_CLIENT = axios.create({
@@ -47,6 +48,8 @@ export function App() {
 function Layout() {
   return (
     <div>
+      {/* does this affect any speed or anything */}
+      <Toaster />
       <header>
         <nav>
           <ul>
