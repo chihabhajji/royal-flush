@@ -7,8 +7,8 @@ import { AxiosError } from "axios";
 
 type UseSessionOptions = {
     redirectTo: string;
-    redirectIfFound: boolean;
-    redirectIfNotFound: boolean;
+    redirectIfFound?: boolean;
+    redirectIfNotFound?: boolean;
 };
 type IUseSession = {
     userData?: Omit<UserType, 'password'>;
