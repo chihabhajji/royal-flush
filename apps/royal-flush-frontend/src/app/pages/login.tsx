@@ -53,9 +53,11 @@ export default function Login() {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" className='font-medium text-purple-600 hover:underline' >Submit</Button>
           <Button type="reset">Reset</Button>
         </form>
+        
       </Form>
+      
     )
 }
