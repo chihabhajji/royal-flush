@@ -39,3 +39,14 @@ export const loginUser = async (req, res) => {
   const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
   return res.status(200).json({ token });
 };
+
+export const currentUser = async (req, res) => {
+  const {email} = req.user;
+  const user = await USER_REPOSITORY.findByPk(email, {
+    mapToModel: true,
+  });
+  const response = user.toJSON();
+  delete user.password;
+
+  return res.status(200).json({ ...response });
+};
