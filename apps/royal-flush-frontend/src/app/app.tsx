@@ -1,10 +1,16 @@
 import './styles.css'
 import { Link, createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+
 import Login from './pages/login';
 import Register from './pages/register';
+import Profile from './pages/profile';
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
+import NavBar from '../components/shad/navbar';
+import Logout from '../components/shad/Logout';
+/* client code */
 export const homeClient = new QueryClient()
 export const dashboardClient = new QueryClient()
 export const HOME_AXIOS_CLIENT = axios.create({
@@ -19,6 +25,9 @@ export const DASHBOARD_AXIOS_CLIENT = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+// check local storage if token is there
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -27,6 +36,8 @@ const router = createBrowserRouter([
       { path: "/", element: <h1 className='text-red'>Home</h1> },
       { path: "/login", Component: Login },
       { path: "/register", Component: Register },
+      { path: "/profile", Component: Profile},
+      { path: "/logout", Component: Logout}
       // { path: "/dashboard/*", Component: Login}
     ],
   },
@@ -48,19 +59,10 @@ export function App() {
 function Layout() {
   return (
     <div>
-      {/* does this affect any speed or anything */}
+      {/* does this affect any speed or */}
       <Toaster />
       <header>
-        <nav>
-          <ul>
-            <li className='text-red'>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/register">Register</Link>
-            </li>
-          </ul>
-        </nav>
+     <NavBar />
       </header>
       <main>
       <QueryClientProvider client={homeClient}>

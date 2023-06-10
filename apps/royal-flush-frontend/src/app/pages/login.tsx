@@ -38,11 +38,13 @@ const {isLoading, isError, isSuccess, error, mutate} = useMutation(['login'], as
   try {
     const dto = structuredClone(requestDto) as any;
     const response = await HOME_AXIOS_CLIENT.post('/home/login', dto);
+    console.log(response.data)
     if(response.data.token) {
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
+      console.log(response.data.user)
       toast.success("Login Success");
-      window.location.href = '/dashboard';
+      window.location.href = '/profile';
     }
     return response.data;
   } catch (err) {
