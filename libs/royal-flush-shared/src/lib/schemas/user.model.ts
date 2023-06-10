@@ -1,7 +1,7 @@
 import { Table, Column, Model, AllowNull, BelongsToMany , DataType} from 'sequelize-typescript';
 import { EventModel } from './event-model.model';
 import { EventeAttendances } from './event-attendee.model';
-import { ERole } from '../../../../libs/royal-flush-shared/src/lib/constants/roles.enum';
+import { ERole } from '../constants/roles.enum';
 
 @Table({
   tableName: 'users',
@@ -13,27 +13,27 @@ export class User extends Model<User> {
   @Column({
     primaryKey: true,
   })
-  email: string;
+  email!: string;
 
   @AllowNull(false)
   @Column
-  password: string;
+  password!: string;
 
   @AllowNull(false)
   @Column
-  firstName: string;
+  firstName!: string;
 
   @AllowNull(false)
   @Column
-  lastName: string;
+  lastName!: string;
 
   @Column({
-    defaultValue: ERole.Admin,
+    defaultValue: ERole.User,
     type: DataType.TINYINT
   })
-  role: ERole;
+  role: ERole = ERole.User;
   @BelongsToMany(() => EventModel, () => EventeAttendances)
-  events: EventModel[];
+  events: EventModel[] = [];
   get fullName(): string {
     return `${this.getDataValue('firstName')} ${this.getDataValue('lastName')}`;
   }
