@@ -1,6 +1,8 @@
 import { BelongsToMany, Column, CreatedAt, DataType, DeletedAt, HasMany, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
 import { User } from "./user.model";
 import { EventeAttendances } from "./event-attendee.model";
+import { EventType } from "../interfaces/event-model.interface";
+import { UserType } from "../interfaces";
 
 @Table({
   tableName: 'events',
@@ -8,7 +10,7 @@ import { EventeAttendances } from "./event-attendee.model";
   timestamps: true,
   paranoid: true,
 })
-export class EventModel extends Model {
+export class EventModel extends Model<EventType> implements EventType {
   @Column({
     defaultValue: DataType.UUIDV4,
     primaryKey: true,
@@ -37,5 +39,5 @@ export class EventModel extends Model {
   deletionDate!: Date;
 
   @BelongsToMany(() => User, () => EventeAttendances)
-  attendees: User[] = [];
+  attendees: UserType[] = [];
 }

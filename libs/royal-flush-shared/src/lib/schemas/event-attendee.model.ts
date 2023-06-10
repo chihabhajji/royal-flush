@@ -1,6 +1,7 @@
 import { Column, CreatedAt, DeletedAt, ForeignKey, Model, Table, UpdatedAt } from "sequelize-typescript";
 import { User } from "./user.model";
 import { EventModel } from "./event-model.model";
+import { EventeAttendancesType } from "../interfaces/event-attendee.interface";
 
 @Table({
     tableName: 'evente-attendances',
@@ -8,7 +9,7 @@ import { EventModel } from "./event-model.model";
     timestamps: true,
     paranoid: true,
   })
-export class EventeAttendances extends Model {
+export class EventeAttendances extends Model<EventeAttendancesType> implements EventeAttendancesType {
   @ForeignKey(() => EventModel)
   @Column
   eventId!: string;
