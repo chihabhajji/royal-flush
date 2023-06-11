@@ -1,26 +1,45 @@
-version: '3.8'
+version: "3.8"
+
+networks:
+  corp:
+    driver: bridge
+
 services:
   db:
     image: mysql:5.7
     environment:
       MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASS}
-      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+      MYSQL_PASSWORD: 
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
       MYSQL_HOST: ${DB_HOST}
       MYSQL_PORT: ${DB_PORT}
     ports:
       - "${DB_PORT}:${DB_PORT}"
     volumes:
       - db_data:/var/lib/mysql
-
-  app:
-    build:
-      context: ./apps/royal-flush-pack
-      dockerfile: Dockerfile
+  backend:
+    extends:
+      file: docker-compose.base.yml
+      service: nx-app-base
+    command: pnpm run royal-flush-pack:prod
     depends_on:
       - db
-    restart: on-failure
+    networks:
+      - corp
+    ports:
+      - 3000:3000
+
+  # React App
+  frontend:
+    extends:
+      file: docker-compose.base.yml
+      service: nx-app-base
+    command: pnpm run royal-flush-frontend:prod
+    networks:
+      - corp
+    ports:
+      - 4202:4200
 
 volumes:
+  mono-node-modules: null
   db_data:

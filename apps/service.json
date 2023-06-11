@@ -1,0 +1,21 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+      "name": "royal-flush-pack-service"
+    },
+    "spec": {
+      "type": "NodePort",
+      "selector": {
+        "app": "royal-flush-pack"
+      },
+      "ports": [
+        {
+          "protocol": "TCP",
+          "port": 3000,
+          "targetPort": 3000,
+          "name": "royal-flush-pack-service"
+        }
+      ]
+    }
+  }

@@ -1,0 +1,36 @@
+{
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": {
+      "name": "royal-flush-pack"
+    },
+    "spec": {
+      "replicas": 1,
+      "selector": {
+        "matchLabels": {
+          "app": "royal-flush-pack"
+        }
+      },
+      "template": {
+        "metadata": {
+          "labels": {
+            "app": "royal-flush-pack"
+          }
+        },
+        "spec": {
+          "containers": [
+            {
+              "name": "royal-flush-pack",
+              "image": "royal-flush-pack:latest",
+              "imagePullPolicy": "Never",
+              "ports": [
+                {
+                  "containerPort": 3000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }

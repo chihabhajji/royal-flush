@@ -4,7 +4,7 @@
 # Tip: Modify "docker-build" options in project.json to change docker build args.
 #
 # Run the container with `docker run -p 3000:3000 -t royal-flush-pack`.
-FROM docker.io/node:lts-alpine
+FROM nx-app-base as builder
 
 ENV HOST=0.0.0.0
 ENV PORT=3000
@@ -19,6 +19,6 @@ RUN chown -R royal-flush-pack:royal-flush-pack .
 
 # You can remove this install step if you build with `--bundle` option.
 # The bundled output will include external dependencies.
-RUN npm --prefix royal-flush-pack --omit=dev -f install
+RUN pnpm --prefix royal-flush-pack --omit=dev -f install
 
-CMD [ "node", "royal-flush-pack" ]
+CMD [ "node", "royal-flush-pack/main.js"]

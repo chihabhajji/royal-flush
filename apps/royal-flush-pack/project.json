@@ -36,7 +36,8 @@
           "buildTarget": "royal-flush-pack:build:development"
         },
         "production": {
-          "buildTarget": "royal-flush-pack:build:production"
+          "buildTarget": "royal-flush-pack:build:production",
+          "generatePackageJson": true
         }
       }
     },

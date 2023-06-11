@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "dev:flush": "nx run-many --target=serve --configuration=development --projects=royal-flush-pack,royal-flush-frontend"
+    "dev:flush": "nx run-many --target=serve --configuration=development --projects=royal-flush-pack,royal-flush-frontend",
+    "royal-flush-frontend:prod": "pnpx nx run royal-flush-frontend:serve:production",
+    "royal-flush-pack:prod": "pnpx nx run royal-flush-pack:serve:production"
   },
   "private": true,
   "dependencies": {
